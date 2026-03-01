@@ -1,0 +1,199 @@
+🐧 Linux Privilege Escalation Automation Toolkit
+Practical Work Documentation
+
+Platform: Kali Linux
+Language Used: Python
+Environment: VirtualBox (Kali Linux VM)
+
+1️⃣ Introduction
+
+This project focuses on developing an automated Linux Privilege Escalation Automation Toolkit designed to detect potential privilege escalation vulnerabilities in a Linux system.
+
+Privilege escalation occurs when a non-root user gains elevated privileges due to misconfigurations, weak permissions, vulnerable services, or outdated kernels.
+
+The toolkit performs safe enumeration and detection without executing exploitation steps.
+
+2️⃣ Project Objective
+
+The objectives of this project are:
+
+To automate privilege escalation enumeration.
+
+To detect SUID/SGID misconfigurations.
+
+To identify weak file permissions.
+
+To collect system information for vulnerability analysis.
+
+To generate structured security findings.
+
+To simulate real-world red-team enumeration and blue-team auditing practices.
+
+3️⃣ System Environment
+
+Operating System: Kali Linux
+
+Kernel Version: Linux 6.18.9+kali-amd64
+
+Virtualization Platform: VirtualBox
+
+Programming Language: Python 3
+
+The toolkit was executed in a controlled lab environment for safe security testing.
+
+4️⃣ Toolkit Architecture
+
+The toolkit consists of the following modules:
+
+main.py → Controls execution flow
+
+system_info.py → Collects system information
+
+suid_scan.py → Scans for SUID binaries
+
+permission_scan.py → Detects world-writable files
+
+Workflow:
+
+System Info → SUID Scan → Permission Scan → Output Display
+
+5️⃣ Practical Execution Steps
+Step 1: System Information Collection
+
+The toolkit collected:
+
+Current logged-in user
+
+User group memberships
+
+Kernel version
+
+Output example:
+
+Current User: root
+
+Groups: root
+
+Kernel Version: Linux kali 6.18.9+kali-amd64
+
+This helps understand the privilege context and environment.
+
+Step 2: SUID Binary Scan
+
+The toolkit executed:
+
+find / -perm -4000 -type f
+
+Purpose:
+To identify binaries with SUID bit enabled.
+
+SUID binaries run with root privileges even when executed by normal users.
+
+Examples of high-risk SUID binaries include:
+
+find
+
+awk
+
+perl
+
+vim
+
+These can be abused using GTFOBins techniques.
+
+Step 3: World-Writable File Scan
+
+The toolkit executed:
+
+find / -type f -perm -0002
+
+Purpose:
+To detect files writable by all users.
+
+World-writable files may allow attackers to:
+
+Modify scripts executed by root
+
+Inject malicious code
+
+Replace service binaries
+
+6️⃣ Findings
+
+During practical execution:
+
+Multiple SUID binaries were detected.
+
+Several world-writable files were identified.
+
+System kernel information was collected for vulnerability analysis.
+
+Since the toolkit was run as root initially, privilege escalation was not required. However, testing under a non-root user would simulate real escalation scenarios.
+
+7️⃣ Security Implications
+
+Misconfigured SUID binaries may allow:
+
+Shell spawning
+
+File reading as root
+
+Command execution
+
+World-writable files may allow:
+
+Script hijacking
+
+Cron job abuse
+
+Service misconfiguration exploitation
+
+Privilege escalation vulnerabilities are commonly used in:
+
+Red team penetration testing
+
+Real-world cyber attacks
+
+Post-exploitation phases
+
+8️⃣ Mitigation Recommendations
+
+To secure Linux systems:
+
+Remove unnecessary SUID bits.
+
+Restrict file permissions.
+
+Regularly audit world-writable files.
+
+Apply kernel updates.
+
+Review sudo configurations.
+
+Monitor cron job permissions.
+
+9️⃣ Learning Outcomes
+
+This project provided practical experience in:
+
+Linux privilege escalation techniques.
+
+SUID/SGID behavior analysis.
+
+File permission auditing.
+
+Kernel version analysis.
+
+Automated security scanning.
+
+Red team enumeration methods.
+
+Blue team auditing practices.
+
+🔟 Conclusion
+
+The Linux Privilege Escalation Automation Toolkit successfully demonstrated automated detection of common privilege escalation vectors.
+
+The project reflects real-world security auditing methodologies used in penetration testing and SOC operations.
+
+It enhanced understanding of Linux security architecture and misconfiguration risks.
